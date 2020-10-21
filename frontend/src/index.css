@@ -1,0 +1,12 @@
+main {
+  min-height: 80vh;
+}
+
+header .logo {
+  height: 150px;
+  position: fixed;
+  top: 0px;
+  left: 5px;
+  text-align: left;
+  
+}
