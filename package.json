@@ -1,0 +1,23 @@
+{
+  "name": "comics",
+  "version": "1.0.0",
+  "description": "Comic Shop Site",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timmlaxton/comic.git"
+  },
+  "author": "Tim Laxton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/timmlaxton/comic/issues"
+  },
+  "homepage": "https://github.com/timmlaxton/comic#readme",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "express": "^4.17.1"
+  }
+}
