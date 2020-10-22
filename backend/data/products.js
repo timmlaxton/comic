@@ -9,8 +9,7 @@ const products = [
     publisher: 'Marvel',
     price: 12.00,
     countInStock: 3,
-    description:
-    'Summoned by Reed Richards, the group known as the Fantastic Four assembles. The group relives the space flight into cosmic rays that changed them forever, creating four new super heroes, Mr. Fantastic, The Human Torch, The Invisible Woman and The Thing.',
+    description:'Summoned by Reed Richards, the group known as the Fantastic Four assembles. The group relives the space flight into cosmic rays that changed them forever, creating four new super heroes, Mr. Fantastic, The Human Torch, The Invisible Woman and The Thing.',
   },
   {
     
@@ -74,8 +73,7 @@ const products = [
     publisher: 'Image',
     price: 3.99,
     countInStock: 4,
-    description:
-    'The Department of Truth follows Cole Turner, a man who has studied conspiracy theories all his life, but he isn’t prepared for what happens when he discovers that all of them are true. ',
+    description:'The Department of Truth follows Cole Turner, a man who has studied conspiracy theories all his life, but he isn’t prepared for what happens when he discovers that all of them are true. ',
   },
 ]
 
