@@ -24,3 +24,25 @@ header .logo {
   text-align: left;
   
 }
+
+/* carousel */
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+  display: flex;
+  border: solid 6px;
+}
+
+
+.carousel img {
+  justify-content: center;
+  height: min-vh-100;
+  width: min-vh-100;
+  padding: 1px;
+  
+  
+  
+}
+.carousel a {
+  margin: 0 auto;
+}

@@ -25,6 +25,16 @@ const getProductById = asyncHandler (async (req, res) => {
     }
 })
 
+// Get top products
+// GET /api/products/top
+// Public
+const getTopProducts = asyncHandler (async (req, res) => {
+  const products = await Product.find({}).limit(6)
+
+  res.json(products)
+})
+    
+
 export {
-  getProducts, getProductById
+  getProducts, getProductById, getTopProducts
 }

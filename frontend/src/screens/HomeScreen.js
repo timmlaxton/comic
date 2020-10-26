@@ -4,10 +4,13 @@ import {Row, Col} from 'react-bootstrap'
 import Product from '../components/Product'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import ProductCarousel from '../components/ProductCarousel'
 import {listProducts} from '../actions/productActions' 
 
 
-const HomeScreen = () => {
+const HomeScreen = ({match}) => {
+  const keyword = match.params.keyword
+
   const dispatch = useDispatch()
 
   const productList = useSelector(state => state.productList)
@@ -20,6 +23,7 @@ const HomeScreen = () => {
 
   return (
     <>
+    {!keyword && <ProductCarousel/>}
       <h1>Comics</h1>
   {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> :
        <Row>
