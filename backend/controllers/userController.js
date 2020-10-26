@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler'
+import generateToken from '../utils/generateToken.js'
 import User from '../models/userModel.js'
 
 // Auth user & get token
@@ -18,7 +19,7 @@ if(user && (await user.matchPassword(password))) {
     name: user.name,
     email: user.email,
     isAdmin: user.isAdmin,
-    token: null
+    token: generateToken(user._id)
   })
 } else {
   res.status(401)
