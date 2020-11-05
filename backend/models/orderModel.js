@@ -7,17 +7,15 @@ const orderSchema = mongoose.Schema(
     required: true,
     ref: 'User'
   },
-  orderItems: [{
+  orderItems: [
+    {
       name: {type: String, required: true},
-      quantity: {type: Number, required: true},
+      qty: {type: Number, required: true},
       image: {type: String, required: true},
       price: {type: Number, required: true},
-      product: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Product'
-      }
-  }],
+      product: {type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Product'},
+  },
+],
   shippingAddress: {
     address: {  type: String, required: true},
     city: {  type: String, required: true},
@@ -35,11 +33,7 @@ const orderSchema = mongoose.Schema(
     updateTime: {type: String },
     email_address: {type: String },
   },
-  taxPrice: {
-    type: Number,
-    required: true,
-    default: 0.0
-  },
+
   shippingPrice: {
     type: Number,
     required: true,
