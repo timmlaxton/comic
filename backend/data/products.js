@@ -75,6 +75,18 @@ const products = [
     countInStock: 4,
     description:'The Department of Truth follows Cole Turner, a man who has studied conspiracy theories all his life, but he isn’t prepared for what happens when he discovers that all of them are true. ',
   },
+  {
+    
+    name: "Nailbiter",
+    image: '../images/nail.jpg',
+    category: 'Single Issue',
+    writer: 'Joshua Williamson',
+    artist: 'Mike Henderson',
+    publisher: 'Image',
+    price: 5.99,
+    countInStock: 1,
+    description:'An obsessed FBI profiler investigating the town has suddenly gone missing, and now an NSA Agent must work with the notorious serial killer Edward. ',
+  },
 ]
 
 export default  products
