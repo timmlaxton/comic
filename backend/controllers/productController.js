@@ -50,8 +50,60 @@ if(product) {
 }
 })
 
+
+
+// Create product
+// Create /api/products
+// Private Admin
+const createProduct = asyncHandler (async (req, res) => {
+  const product = new Product({
+    name: 'Sample Name',
+    price: 0,
+    user: req.user._id,
+    image: '/images/sample.jpg',
+    category: 'Sample category',
+    writer: 'Sample writer',
+    artist: 'Sample artist',
+    publisher: 'Sample publisher',
+    countInStock: 0,
+    description: 'Sample description'
+  })
+
+  const createdProduct = await product.save()
+  res.status(201).json(createdProduct)
+})
+
+// Update product
+// PUT /api/products/:id
+// Private Admin
+const updateProduct = asyncHandler (async (req, res) => {
+  const {name, image, category, writer, artist, publisher, price, countInStock, description } = req.body
+
+  const product = await Product.findById(req.params.id)
+
+  if(product) {
+    product.name = name
+    product.image = image
+    product.category = category
+    product.writer = writer
+    product.artist = artist
+    product.publisher = publisher
+    product.price = price
+    product.countInStock = countInStock
+    product.description = description
+
+
+    const updatedProduct = await product.save()
+    res.json(updatedProduct)
+  } else {
+    res.status(404)
+    throw new Error('Produt not found')
+  }
+})
+
+
     
 
 export {
-  getProducts, getProductById, getTopProducts, deleteProduct
+  getProducts, getProductById, getTopProducts, deleteProduct, updateProduct, createProduct
 }
