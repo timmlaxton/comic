@@ -8,7 +8,6 @@ import SearchBox from '../components/SearchBox'
 import { listProducts } from '../actions/productActions'
 
 
-
 const ComicScreen = ({match}) => {
   const [products, setProducts] = useState([])
   const keyword = match.params.keyword
