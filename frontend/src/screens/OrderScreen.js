@@ -67,7 +67,7 @@ const OrderScreen = ({match, history}) => {
         setSdkReady(true)
       }
     }
-  }, [dispatch, orderId, successPay, successDeliver, order  ])
+  }, [dispatch, orderId, successPay, successDeliver, order, history, userInfo  ])
 
     const successPaymentHandler = (paymentResult) => {
       console.log(paymentResult)
@@ -157,12 +157,6 @@ const OrderScreen = ({match, history}) => {
                   <Row>
                     <Col>Shipping</Col>
                     <Col>£{order.shippingPrice}</Col>
-                  </Row>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Row>
-                    <Col>Tax</Col>
-                    <Col>£{order.taxPrice}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
