@@ -1,5 +1,90 @@
 import asyncHandler from 'express-async-handler'
 import Order from '../models/orderModel.js'
+import Standing from '../models/standingModel.js'
+import mongoose from 'mongoose'
+import Product from '../models/productModel.js'
+// @desc    Create new order
+// @route   POST /api/order
+// @access  Private
+const createOrder = asyncHandler(async (req, res) => {
+  console.log('BODY', req.body)
+  const {
+    orderItems,
+    shippingAddress,
+    paymentMethod,
+    itemsPrice,
+    taxPrice,
+    shippingPrice,
+    totalPrice,
+  } = req.body
+
+  if (orderItems && orderItems.length === 0) {
+    res.status(400)
+    throw new Error('No order items')
+    return
+  } else {
+    /**
+     * We need to use a transaction as we are updating multiple products
+     * and creating a new order. If one of these fails, then we want to reverse all of them.
+     */
+    const session = await mongoose.startSession()
+    
+    try {
+      await session.withTransaction(async () => {
+        const {productsById, productIds} = orderItems.reduce((acc, product) => {
+          acc.productsById[product.product] = product
+          acc.productIds.push(product.product)
+          return acc
+        }, {productsById: {}, productIds: []})
+
+        console.log('productIds', {productIds, productsById})
+        const products = await Product.find({_id: {
+          $in: productIds
+        }})
+        // console.log({products})
+
+        const result = await Promise.all(products.map(productDoc => {
+          return (async () => {
+            console.log(productDoc)
+            const orderProduct = productsById[productDoc._id]
+            const orderProductPrice = parseFloat(orderProduct.price)
+            const productPrice = parseFloat(productDoc.price)
+            if (productDoc.countInStock < orderProduct.qty) throw new Error(`${productDoc.name} is out of stock!`)
+            if (productPrice !== orderProductPrice) throw new Error(`${productDoc.name} has price mismatch! Current price: ${productDoc.price}, provided price: ${orderProduct.price}`)
+            
+            productDoc.countInStock = productDoc.countInStock - orderProduct.qty
+            console.log('Count in stock', productDoc.countInStock)
+            return productDoc.save({session})
+          })()
+        }))
+        console.log(result)    
+        
+        const createdOrder = await Order.create([{
+          orderItems,
+          user: req.user._id,
+          shippingAddress,
+          paymentMethod,
+          itemsPrice,
+          taxPrice,
+          shippingPrice,
+          totalPrice,
+        }], {session})
+    
+        res.status(201).json(createdOrder)  
+      })
+    } catch (error) {
+      console.error(error)
+      await session.abortTransaction()
+      res.status(500).json({
+        error: error.toString()
+      })
+    } finally {
+      session.endSession()
+    }
+  }
+})
+
+
 
 // @desc    Create new order
 // @route   POST /api/orders
@@ -115,4 +200,24 @@ const getOrders = asyncHandler(async (req, res) => {
 })
 
 
-export {addOrderItems, getOrderById, updateOrderToPay, updateOrderToDelivered, getMyOrders, getOrders}
+// Create standing order
+// Create /api/orders/standingorder
+// Private 
+const createStanding = asyncHandler (async (req, res) => {
+  const standing = new Standing({
+    name: 'Sample Name',
+    user: req.user._id,
+    title: 'Sample Title',
+    writer: 'Sample writer',
+    artist: 'Sample artist',
+    publisher: 'Sample publisher',
+    issues: 0
+  })
+
+  const createdStanding = await standing.save()
+  res.status(201).json(createdStanding)
+})
+
+
+
+export {addOrderItems, getOrderById, updateOrderToPay, updateOrderToDelivered, getMyOrders, getOrders, createStanding, createOrder}

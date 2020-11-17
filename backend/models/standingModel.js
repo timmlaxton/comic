@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const productSchema = mongoose.Schema(
+const standingSchema = mongoose.Schema(
   {
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -11,16 +11,12 @@ const productSchema = mongoose.Schema(
     type: String,
     required: true
   },
-  image: {
+  title: {
     type: String,
     required: true,
     
   },
-  category: {
-    type: String,
-    required: true
-    
-  },
+ 
   writer: {
     type: String,
     required: true
@@ -36,29 +32,17 @@ const productSchema = mongoose.Schema(
     required: true
     
   },
-  description: {
-    type: String,
-    required: true
-    
-  },
-  price: {
+  
+  issues: {
     type: Number,
     required: true,
     default: 0
   },
-  countInStock: {
-    type: Number,
-    required: true,
-    default: 0
-  },
-  featured: {
-    type: Boolean,
-    default: false
-  }
+ 
 }, {
   timestamps: true
 })
 
-const Product = mongoose.model('Product', productSchema)
+const Standing = mongoose.model('Standing', standingSchema)
 
-export default Product
+export default Standing
