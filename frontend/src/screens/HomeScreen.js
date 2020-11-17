@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react'
+import React, { useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {Row, Col, Card} from 'react-bootstrap'
 import Product from '../components/Product'
@@ -15,11 +15,21 @@ const HomeScreen = ({match}) => {
 
   const productList = useSelector(state => state.productList)
   const {loading, error, products} = productList
-
+  const [featuredProducts, setFeaturedProducts] = useState([])
   useEffect(() => {
     dispatch(listProducts())
   },[dispatch])
 
+  useEffect(() => {
+    let featuredProducts = getFeaturedProducts(products)
+    setFeaturedProducts(featuredProducts)
+  }, [products])
+
+  console.log({products, featuredProducts})
+
+  function getFeaturedProducts(products = []) {
+    return products.filter(product => product.featured)
+  }
 
   return (
     <>
@@ -37,7 +47,7 @@ const HomeScreen = ({match}) => {
       <h1>Back Issues</h1>
   {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> :
        <Row>
-       {products.map(product => (
+       {featuredProducts.map(product => (
          <Col key={product._id} sm={4} md={4} lg={4} xl={3}>
            <Product product={product} />
          </Col>

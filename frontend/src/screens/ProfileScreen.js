@@ -33,7 +33,7 @@ const ProfileScreen = ({location, history,}) => {
     if(!userInfo) {
       history.push('/login')
     } else {
-      console.log(user.name)
+
       if(!user.name) {
         dispatch(getUserDetails('profile'))
         dispatch(listMyOrders())
@@ -149,9 +149,14 @@ const ProfileScreen = ({location, history,}) => {
       </tbody>
     </Table>
   )}
+  
+
+  
     </Col>
+    
   </Row>
-  )
+  
+  ) 
 }
 
 export default ProfileScreen

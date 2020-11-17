@@ -18,6 +18,9 @@ ORDER_LIST_REQUEST,
 ORDER_DELIVER_REQUEST,
 ORDER_DELIVER_SUCCESS,
 ORDER_DELIVER_FAIL,
+STANDING_ORDER_CREATE_REQUEST,
+STANDING_ORDER_CREATE_SUCCESS,
+STANDING_ORDER_CREATE_FAIL
 
 } 
 from '../constants/orderConstants'
@@ -38,12 +41,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
         },
       }
 
-      const {data} = await axios.post(`/api/orders`, order, config) 
-
-      dispatch({
-        type: ORDER_CREATE_SUCCESS,
-        payload: data,
-      })
+      const {data} = await axios.post(`/api/orders/order`, order, config) 
 
       dispatch({
         type: ORDER_CREATE_SUCCESS,
@@ -51,8 +49,8 @@ export const createOrder = (order) => async (dispatch, getState) => {
       })
   } catch (error) {
     dispatch({
-    type: ORDER_CREATE_FAIL,
-    payload: error.response && error.response.data.message ? error.response.data.message : error.message
+      type: ORDER_CREATE_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message
     })
   }
 }
@@ -203,6 +201,33 @@ export const listOrders = () => async (dispatch, getState) => {
     dispatch({
       type: ORDER_LIST_FAIL,
       payload: message,
+    })
+  }
+}
+
+export const createStandingOrder = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: STANDING_ORDER_CREATE_REQUEST,
+    })
+
+    const { userLogin: {userInfo}, } = getState()
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`
+      },
+    }
+     const {data} = await axios.post(`/api/standingorder`, {}, config)
+
+    dispatch({
+      type: STANDING_ORDER_CREATE_SUCCESS,
+      payload: data
+    })
+  } catch (error) {
+    dispatch({
+      type: STANDING_ORDER_CREATE_FAIL,
+      payload: error.response && error.response.data.message ? error.response.data.message : error.message
     })
   }
 }

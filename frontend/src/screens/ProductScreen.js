@@ -27,9 +27,9 @@ const addToCartHandler = () => {
   Go Back 
   </Link>
 {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> : (
-  <Row>
+  <Row className="product-info-container">
   <Col md={3}>
-    <Image src={product.image} alt={product.name}  />
+    <Image className="product-image" src={product.image} alt={product.name}  />
   </Col>
   <Col md={3}>
     <ListGroup variant='flush'>
@@ -94,6 +94,8 @@ const addToCartHandler = () => {
       </ListGroup>
     </Card>
   </Col>
+  <div className="product-zoom-result-container"></div>
+
 </Row>
 )}
   

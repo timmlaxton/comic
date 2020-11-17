@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import {Route} from 'react-router-dom'
 import {Row, Col} from 'react-bootstrap'
 import Product from '../components/Product'
@@ -9,20 +9,24 @@ import { listProducts } from '../actions/productActions'
 
 
 const ComicScreen = ({match}) => {
-  const [products, setProducts] = useState([])
+  // const [products, setProducts] = useState([])
   const keyword = match.params.keyword
-
+  const products = useSelector((state) => {
+    console.log({state})
+    return state.productList.products
+  })
+  console.log('products', products)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(listProducts(keyword))
-    const fetchProducts = async () => {
+    /*const fetchProducts = async () => {
       const {data} = await axios.get('/api/products')
 
       setProducts(data)
     }
 
-    fetchProducts()
+    fetchProducts()*/
   },[dispatch, keyword])
 
 
