@@ -11,32 +11,26 @@ const standingSchema = mongoose.Schema(
     type: String,
     required: true
   },
-  title: {
+  address: {
     type: String,
     required: true,
-    
   },
- 
-  writer: {
+  contactNumber: {
+    type: String,
+    required: true,
+    default: 0 
+  },
+  email: {
+    type: String,
+    required: true 
+  },
+  title: {
     type: String,
     required: true
-    
-  },
-  artist: {
-    type: String,
-    required: true
-    
   },
   publisher: {
     type: String,
-    required: true
-    
-  },
-  
-  issues: {
-    type: Number,
     required: true,
-    default: 0
   },
  
 }, {

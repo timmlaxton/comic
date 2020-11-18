@@ -5,68 +5,61 @@ import {useDispatch, useSelector} from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import {listProductDetails, updateProduct  } from '../actions/productActions'
-import { PRODUCT_UPDATE_RESET } from '../constants/productContants';
+import { listStandingOrders, updateStandingOrder, createStandingOrder } from '../actions/standingActions'
+import { STANDING_ORDER_UPDATE_RESET } from '../constants/standingConstants';
 
 const PlaceStandingOrderScreen = ({match, history }) => {
-  const productId = match.params.id
+  const standingId = match.params.id
 
   const [name, setName] = useState('')
-  const [price, setPrice] = useState(0)
-  const [image, setImage] = useState('')
-  const [category, setCategory] = useState('')
-  const [writer, setWriter] = useState('')
-  const [artist, setArtist] = useState('')
+  const [address, setAddress] = useState('')
+  const [contactNumber, setContactNumber] = useState('')
+  const [email, setEmail] = useState('')
+  const [title, setTitle] = useState('')
   const [publisher, setPublisher] = useState('')
-  const [countInStock, setCountInStock] = useState(0)
-  const [description, setDescription] = useState('')
-  const [uploading, setUploading] = useState(false)
+  
 
   const dispatch = useDispatch()
   
-  const productDetails = useSelector((state) => state.productDetails)
-  const { loading, error, product} = productDetails
+  const standingOrderDetails = useSelector((state) => state.standingOrderDetails)
+  const { loading, error, standing} = standingOrderDetails
 
-  const productUpdate = useSelector((state) => state.productUpdate)
-  const { loading: loadingUpdate, error: errorUpdate, success: successUpdate} = productUpdate
+  const standingOrderUpdate = useSelector((state) => state.standingOrderUpdate)
+  const { loading: loadingUpdate, error: errorUpdate, success: successUpdate} = standingOrderUpdate
 
   useEffect(() => {
       if(successUpdate) {
-        dispatch({type: PRODUCT_UPDATE_RESET})
-          history.push('/admin/productlist')
-    
+        dispatch({type: STANDING_ORDER_UPDATE_RESET})
+          history.push('/')
         } else {
-          setName(product.name)
-          setPrice(product.price)
-          setImage(product.image)
-          setCategory(product.category)
-          setWriter(product.writer)
-          setArtist(product.artist)
-          setPublisher(product.publisher)
-          setCountInStock(product.countInStock)
-          setDescription(product.description)
+          
+          setName(standing.name)
+          setAddress(standing.address)
+          setContactNumber(standing.contactNumber)
+          setEmail(standing.email)
+          setTitle(standing.title)
+          setPublisher(standing.publisher)
+          
         }
       }
       
    
-  ,[dispatch, product , history, successUpdate])
+    ,[dispatch, standingId, standing , history, successUpdate])
 
   
 
     const submitHandler = (e) => {
       e.preventDefault()
       dispatch
-      (updateProduct({
-        _id: productId,
+      (updateStandingOrder({
+        _id: standingId,
         name,
-        price,
-        image,
-        category,
-        writer,
-        artist,
+        address,
+        contactNumber,
+        email,
+        title,
         publisher,
-        countInStock,
-        description
+        
       }))
     }
 
@@ -78,7 +71,7 @@ const PlaceStandingOrderScreen = ({match, history }) => {
       </Link>
 
     <FormContainer>
-      <h1></h1>
+      <h1>Create Standing</h1>
       {loadingUpdate && <Loader/>}
       {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
       {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> : (
@@ -93,45 +86,45 @@ const PlaceStandingOrderScreen = ({match, history }) => {
             ></Form.Control>
           </Form.Group>
   
-          <Form.Group controlId='price'>
-            <Form.Label>Price</Form.Label>
+          <Form.Group controlId='address'>
+            <Form.Label>Address</Form.Label>
             <Form.Control 
-            type='number' 
-            placeholder="Enter price" 
-            value={price} 
-            onChange={(e) => setPrice(e.target.value)}
+            type='address' 
+            placeholder="Enter Address" 
+            value={address} 
+            onChange={(e) => setAddress(e.target.value)}
             ></Form.Control>
           </Form.Group>
   
          
 
-          <Form.Group controlId='category'>
-            <Form.Label>Category</Form.Label>
+          <Form.Group controlId='contactNumber'>
+            <Form.Label>contactNumber</Form.Label>
             <Form.Control 
-            type='text' 
-            placeholder="Category" 
-            value={category} 
-            onChange={(e) => setCategory(e.target.value)}
+            type='string' 
+            placeholder="contactNumber" 
+            value={contactNumber} 
+            onChange={(e) => setContactNumber(e.target.value)}
             ></Form.Control>
           </Form.Group>
   
-          <Form.Group controlId='writer'>
-            <Form.Label>Writer</Form.Label>
+          <Form.Group controlId='email'>
+            <Form.Label>Email</Form.Label>
             <Form.Control 
             type='text' 
-            placeholder="Enter writer" 
-            value={writer} 
-            onChange={(e) => setWriter(e.target.value)}
+            placeholder="Enter email" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
-          <Form.Group controlId='artist'>
-            <Form.Label>Artist</Form.Label>
+          <Form.Group controlId='title'>
+            <Form.Label>Title</Form.Label>
             <Form.Control 
             type='text' 
-            placeholder="Enter artist" 
-            value={artist} 
-            onChange={(e) => setArtist(e.target.value)}
+            placeholder="Enter title" 
+            value={title} 
+            onChange={(e) => setTitle(e.target.value)}
             ></Form.Control>
           </Form.Group>
 
@@ -145,25 +138,7 @@ const PlaceStandingOrderScreen = ({match, history }) => {
             ></Form.Control>
           </Form.Group>
   
-          <Form.Group controlId='countInStock'>
-            <Form.Label>Count In Stock</Form.Label>
-            <Form.Control 
-            type='number' 
-            placeholder="Enter number of stock" 
-            value={countInStock} 
-            onChange={(e) => setCountInStock(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-  
-          <Form.Group controlId='description'>
-            <Form.Label>Description</Form.Label>
-            <Form.Control 
-            type='text' 
-            placeholder="Enter description" 
-            value={description} 
-            onChange={(e) => setDescription(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+         
   
           
           <Button type='submit' variant='primary'>

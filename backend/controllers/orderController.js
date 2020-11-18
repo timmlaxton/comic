@@ -200,24 +200,6 @@ const getOrders = asyncHandler(async (req, res) => {
 })
 
 
-// Create standing order
-// Create /api/orders/standingorder
-// Private 
-const createStanding = asyncHandler (async (req, res) => {
-  const standing = new Standing({
-    name: 'Sample Name',
-    user: req.user._id,
-    title: 'Sample Title',
-    writer: 'Sample writer',
-    artist: 'Sample artist',
-    publisher: 'Sample publisher',
-    issues: 0
-  })
-
-  const createdStanding = await standing.save()
-  res.status(201).json(createdStanding)
-})
 
 
-
-export {addOrderItems, getOrderById, updateOrderToPay, updateOrderToDelivered, getMyOrders, getOrders, createStanding, createOrder}
+export {addOrderItems, getOrderById, updateOrderToPay, updateOrderToDelivered, getMyOrders, getOrders,  createOrder}
