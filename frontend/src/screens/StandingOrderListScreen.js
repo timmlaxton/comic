@@ -4,7 +4,8 @@ import {Table, Button, Row, Col} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import {listStandingOrders, deleteStandingOrder} from '../actions/standingActions'
+import {listStandingOrders, deleteStandingOrder, createStanding} from '../actions/standingActions'
+import {STANDING_ORDER_CREATE_RESET} from '../constants/standingConstants'
 
 const StandingOrderListScreen = ({history, match}) => {
   const dispatch = useDispatch()
@@ -15,17 +16,25 @@ const StandingOrderListScreen = ({history, match}) => {
   const standingOrderDelete = useSelector(state => state.standingOrderDelete)
   const { loading: loadingDelete, error: errorDelete, success: successDelete} = standingOrderDelete
 
+  const standingOrderCreate = useSelector(state => state.standingOrderCreate)
+  const { loading: loadingCreate, error: errorCreate, success: successCreate, standingOrder: createdStanding} = standingOrderCreate
+
   const userLogin = useSelector((state) => state.userLogin)
   const {userInfo} = userLogin
 
   useEffect(() => {
-    if(userInfo && userInfo.isAdmin) {
-      dispatch(listStandingOrders())
-    } else {
+    dispatch({ type: STANDING_ORDER_CREATE_RESET})
+
+    if(!userInfo.isAdmin) {
       history.push('/login')
     }
+    if(successCreate) {
+      history.push(`/admin/standingOrder/${createdStanding._id}/edit`)
+    } else {
+      dispatch(listStandingOrders())
+    }
     
-  }, [dispatch, history, userInfo, successDelete])
+  }, [dispatch, history, userInfo, successDelete, successCreate, createdStanding])
 
   const deleteHandler = (id) => {
     if(window.confirm('Are you sure')){
@@ -34,7 +43,7 @@ const StandingOrderListScreen = ({history, match}) => {
   }
 
   const createStandingOrderHandler = () => {
-
+    dispatch(createStanding())
   }
 
   return (
@@ -50,7 +59,9 @@ const StandingOrderListScreen = ({history, match}) => {
     </Col>
     </Row>
      {loadingDelete && <Loader/>}
-     {loadingDelete && <Message variant='danger'>{errorDelete}</Message>}
+     {errorDelete && <Message variant='danger'>{errorDelete}</Message>}
+     {loadingCreate && <Loader/>}
+     {errorCreate && <Message variant='danger'>{errorCreate}</Message>}
   {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> : (
     <Table striped bordered hover responsive className='table-sm'>
       <thead>

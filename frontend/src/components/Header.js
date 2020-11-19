@@ -39,7 +39,7 @@ const Header = () => {
                  <LinkContainer to='/profile'>
                    <NavDropdown.Item>Profile</NavDropdown.Item>
                  </LinkContainer>
-                 <LinkContainer to='/standingorders'>
+                 <LinkContainer to='/standingorder'>
                    <NavDropdown.Item>Standing Orders</NavDropdown.Item>
                  </LinkContainer>
                  <NavDropdown.Item onClick={logoutHandler}>

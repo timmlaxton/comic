@@ -68,7 +68,7 @@ const updateStandingOrder = asyncHandler (async (req, res) => {
     res.json(updatedStandingOrder)
   } else {
     res.status(404)
-    throw new Error('Produt not found')
+    throw new Error('Standing Order not found')
   }
 })
 

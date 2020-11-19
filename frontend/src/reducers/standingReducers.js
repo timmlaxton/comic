@@ -3,7 +3,6 @@ import {
   STANDING_ORDER_CREATE_REQUEST,
   STANDING_ORDER_CREATE_SUCCESS,
   STANDING_ORDER_CREATE_FAIL,
-  STANDING_ORDER_CREATE_RESET,
   STANDING_ORDER_UPDATE_REQUEST,
   STANDING_ORDER_UPDATE_SUCCESS,
   STANDING_ORDER_UPDATE_FAIL,
@@ -29,8 +28,7 @@ export const standingOrderCreateReducer = (state = {}, action) => {
       return { loading: false, success: true, standing: action.payload }
      case STANDING_ORDER_CREATE_FAIL:
       return { loading: false, error: action.payload }
-    case STANDING_ORDER_CREATE_RESET:
-      return {}
+   
     default:
       return state
   }

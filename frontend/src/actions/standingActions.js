@@ -20,7 +20,7 @@ import {
   
 } from '../constants/standingConstants'
 
-export const createStandingOrder = () => async (dispatch, getState) => {
+export const createStanding = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: STANDING_ORDER_CREATE_REQUEST,

@@ -76,15 +76,15 @@ header .logo {
   .product-info-container {
     position: relative;
   }
-/*
-  .product-zoom-result-container {
+
+  .zoom {
     position: absolute;
     left: 25%;
-    top: 0;
+    top: 100%;
     right: 0;
     bottom: 0;
     z-index: 10;
-    background: rgba(0, 0, 0, .2);
+    
   }
-  */
+ 
 }

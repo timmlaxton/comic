@@ -5,21 +5,22 @@ import {useDispatch, useSelector} from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { listStandingOrders, updateStandingOrder, createStandingOrder } from '../actions/standingActions'
+import {listStandingOrderDetails, updateStandingOrder  } from '../actions/standingActions'
 import { STANDING_ORDER_UPDATE_RESET } from '../constants/standingConstants';
 
-const PlaceStandingOrderScreen = ({match, history }) => {
+const StandingOrderEditScreen = ({match, history }) => {
   const standingId = match.params.id
 
   const [name, setName] = useState('')
-  const [address, setAddress] = useState('')
+  const [address, setAddress] = useState("")
   const [contactNumber, setContactNumber] = useState('')
   const [email, setEmail] = useState('')
-  const [title, setTitle] = useState('')
+  const [writer, setWriter] = useState('')
   const [publisher, setPublisher] = useState('')
   
-
+  
   const dispatch = useDispatch()
+
   
   const standingOrderDetails = useSelector((state) => state.standingOrderDetails)
   const { loading, error, standing} = standingOrderDetails
@@ -30,48 +31,48 @@ const PlaceStandingOrderScreen = ({match, history }) => {
   useEffect(() => {
       if(successUpdate) {
         dispatch({type: STANDING_ORDER_UPDATE_RESET})
-          history.push('/')
+          history.push('/admin/standingOrderList')
+      } else {
+        if (!standing.name || standing._id !== standingId) {
+          dispatch(listStandingOrderDetails(standingId))
         } else {
-          
           setName(standing.name)
           setAddress(standing.address)
           setContactNumber(standing.contactNumber)
           setEmail(standing.email)
-          setTitle(standing.title)
+          setWriter(standing.writer)
           setPublisher(standing.publisher)
           
         }
       }
       
    
-    ,[dispatch, standingId, standing , history, successUpdate])
+  },[dispatch, standingId, standing , history, successUpdate])
 
   
-
     const submitHandler = (e) => {
       e.preventDefault()
       dispatch
       (updateStandingOrder({
         _id: standingId,
         name,
-        address,
         contactNumber,
+        address,
         email,
-        title,
+        writer,
         publisher,
-        
       }))
     }
 
-
+   
   return (
     <> 
-      <Link to='/' className='btn btn-light my-3'>
+      <Link to='/admin/standingOrderList' className='btn btn-light my-3'>
         Go Back
       </Link>
 
     <FormContainer>
-      <h1>Create Standing</h1>
+      <h1>Edit Standing Order</h1>
       {loadingUpdate && <Loader/>}
       {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
       {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> : (
@@ -86,7 +87,7 @@ const PlaceStandingOrderScreen = ({match, history }) => {
             ></Form.Control>
           </Form.Group>
   
-          <Form.Group controlId='address'>
+          <Form.Group controlId='Address'>
             <Form.Label>Address</Form.Label>
             <Form.Control 
             type='address' 
@@ -96,37 +97,37 @@ const PlaceStandingOrderScreen = ({match, history }) => {
             ></Form.Control>
           </Form.Group>
   
-         
-
           <Form.Group controlId='contactNumber'>
-            <Form.Label>contactNumber</Form.Label>
+            <Form.Label>Image</Form.Label>
             <Form.Control 
-            type='string' 
-            placeholder="contactNumber" 
+            type='contactNumber' 
+            placeholder="Enter contactNumber" 
             value={contactNumber} 
             onChange={(e) => setContactNumber(e.target.value)}
             ></Form.Control>
           </Form.Group>
-  
+
           <Form.Group controlId='email'>
-            <Form.Label>Email</Form.Label>
+            <Form.Label>Category</Form.Label>
             <Form.Control 
-            type='text' 
-            placeholder="Enter email" 
+            type='email' 
+            placeholder="Email" 
             value={email} 
             onChange={(e) => setEmail(e.target.value)}
             ></Form.Control>
           </Form.Group>
-
-          <Form.Group controlId='title'>
-            <Form.Label>Title</Form.Label>
+  
+          <Form.Group controlId='writer'>
+            <Form.Label>Writer</Form.Label>
             <Form.Control 
             type='text' 
-            placeholder="Enter title" 
-            value={title} 
-            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter writer" 
+            value={writer} 
+            onChange={(e) => setWriter(e.target.value)}
             ></Form.Control>
           </Form.Group>
+
+         
 
           <Form.Group controlId='publisher'>
             <Form.Label>Publisher</Form.Label>
@@ -138,20 +139,20 @@ const PlaceStandingOrderScreen = ({match, history }) => {
             ></Form.Control>
           </Form.Group>
   
-         
+          
+
+        
+      
   
           
           <Button type='submit' variant='primary'>
            Update
           </Button>
         </Form>
-  
       )}
-      
-     
     </FormContainer>
     </>
   )
 }
 
-export default PlaceStandingOrderScreen
+export default StandingOrderEditScreen

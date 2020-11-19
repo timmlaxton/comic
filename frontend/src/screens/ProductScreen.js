@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {Row, Col, Image, ListGroup, Card, Button, Form} from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import Zoom from 'react-medium-image-zoom'
 import {listProductDetails} from '../actions/productActions'
 
 const ProductScreen = ({match, history}) => {
@@ -29,7 +30,10 @@ const addToCartHandler = () => {
 {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> : (
   <Row className="product-info-container">
   <Col md={3}>
-    <Image className="product-image" src={product.image} alt={product.name}  />
+    <Zoom> 
+    <Image className="product-image" src={product.image} alt={product.name} width="500" />
+    </Zoom>
+    
   </Col>
   <Col md={3}>
     <ListGroup variant='flush'>
