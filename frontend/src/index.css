@@ -22,7 +22,12 @@ header .logo {
   top: 0px;
   left: 5px;
   text-align: left;
+  border: none;
   
+}
+
+.t{
+  font-size: 0rem;
 }
 
 /* carousel */
@@ -50,7 +55,7 @@ header .logo {
 .jumbotron {
   background-image:url('/images/fan1.jpg');
   height:300px;
-  width: 600px;
+  width: 800px;
   background-repeat: no-repeat;
   background-size: auto 100%;
   border-bottom:1px solid white
@@ -60,31 +65,35 @@ header .logo {
   top:50px;
 }
 
-.Card-Img {
-  width: 100%;
-  height: 40vh;
-  object-fit: cover;
-}
+
+
+
 
 .product-image {
-  width: 100%;
+  width: 10%;
   display: block;
   height: auto;
 }
 
-@media screen and (min-width: 1024px) {
-  .product-info-container {
-    position: relative;
-  }
+
+
+
 
   .zoom {
     position: absolute;
-    left: 25%;
+    left: 100%;
     top: 100%;
     right: 0;
     bottom: 0;
     z-index: 10;
-    
   }
  
+  hr.solid {
+    border-top: 3px solid #bbb;
+  
+  }
+
+.card-body{
+  width: 50%;
+  
 }

@@ -5,7 +5,6 @@ import {Row, Col} from 'react-bootstrap'
 import Product from '../components/Product'
 import SearchBox from '../components/SearchBox'
 import { listProducts } from '../actions/productActions'
-import 'react-medium-image-zoom/dist/styles.css'
 
 
 
@@ -16,7 +15,7 @@ const ComicScreen = ({match}) => {
     console.log({state})
     return state.productList.products
   })
-  console.log('products', products)
+  
   const dispatch = useDispatch()
 
   useEffect(() => {
