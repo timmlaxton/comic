@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, {useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
-import {Form, Button} from 'react-bootstrap';
+import {Form, Button, Image} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
@@ -12,9 +12,9 @@ import { PRODUCT_UPDATE_RESET, PRODUCT_CREATE_RESET } from '../constants/product
 const ProductEditScreen = ({match, history }) => {
   const productId = match.params.id
 
-  const [name, setName] = useState('dsadsa')
+  const [name, setName] = useState('name')
   const [price, setPrice] = useState(0)
-  const [imageUrl, setImageUrl] = useState('dsadsa')
+  const [imageUrl, setImageUrl] = useState('')
   const [image, setImage] = useState('')
   const [category, setCategory] = useState('Back Issue')
   const [writer, setWriter] = useState('writer')
@@ -24,6 +24,7 @@ const ProductEditScreen = ({match, history }) => {
   const [description, setDescription] = useState('description')
   const [uploading, setUploading] = useState(false)
   const [featured, setFeatured] = useState(false) 
+  const [imagePreview, setImagePreview] = useState(null)
   const dispatch = useDispatch()  
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product} = productDetails
@@ -39,7 +40,7 @@ const ProductEditScreen = ({match, history }) => {
         return
       }
 
-      console.log({match})
+      
 
       if (isCreateProductMode) return
 
@@ -48,7 +49,7 @@ const ProductEditScreen = ({match, history }) => {
       } else {
         setName(product.name)
         setPrice(product.price)
-        setImage(product.image)
+        setImagePreview(product.image)
         setCategory(product.category)
         setWriter(product.writer)
         setArtist(product.artist)
@@ -64,6 +65,17 @@ const ProductEditScreen = ({match, history }) => {
   const onUploadImage = e => {
     const file = e.target.files[0]
     setImage(file)
+    if (file) {
+      const reader = new FileReader()
+
+      reader.onload = e => {
+        setImagePreview(e.target.result)
+      }
+
+      reader.readAsDataURL(file)
+    } else {
+      setImagePreview(null)
+    }
   }
 
   const uploadFileHandler = async () => {
@@ -94,7 +106,6 @@ const ProductEditScreen = ({match, history }) => {
 
     const submitHandler = async (e) => {
       e.preventDefault()
-      console.log('On submit handler')
       let finalImage = imageUrl
       if (!finalImage && image) {
         finalImage = await uploadFileHandler()
@@ -115,8 +126,7 @@ const ProductEditScreen = ({match, history }) => {
         featured
       }
 
-      console.log('payload', payload)
-      console.log('method', isCreateProductMode ? 'create' : 'update')
+      
       dispatch(isCreateProductMode ? createProduct(payload) : updateProduct(payload))
     }
 
@@ -161,13 +171,16 @@ const ProductEditScreen = ({match, history }) => {
             value={imageUrl} 
             onChange={(e) => setImageUrl(e.target.value)}
             ></Form.Control>
-            <Form.File 
+
+          <Form.File 
             id='image-file' 
             label='Choose File' 
             custom 
             onChange={onUploadImage}></Form.File>
             {uploading && <Loader />}
           </Form.Group>
+
+          {imagePreview ? (<Image src={imagePreview} />) : null}
 
           <Form.Group controlId="category">
           <Form.Label>Category</Form.Label>

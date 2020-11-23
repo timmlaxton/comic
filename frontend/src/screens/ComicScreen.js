@@ -13,7 +13,7 @@ const ComicScreen = (props) => {
   const searchParams = new URLSearchParams(location.search);
   console.log({props, searchParams})
   
-  const keyword = match.params.keyword
+  const keyword = match.params.keyword || ''
   const category = searchParams.get('category') || ''
   console.log('CATEGORY?', category)
   const products = useSelector((state) => {

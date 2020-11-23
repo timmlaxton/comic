@@ -22,7 +22,7 @@ const getProducts = asyncHandler (async (req, res) => {
     }
   }
 
-  console.log('config', config)
+  
 
   const products = await Product.find({...config})
    

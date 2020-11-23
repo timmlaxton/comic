@@ -8,7 +8,7 @@ const categoryOptions = [
   },
   {
     label: 'Back Issues',
-    value: 'back issues'
+    value: 'back issue'
   },
   {
     label: 'Trades',
