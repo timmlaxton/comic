@@ -8,9 +8,14 @@ import { listProducts } from '../actions/productActions'
 
 
 
-const ComicScreen = ({match}) => {
+const ComicScreen = (props) => {  
+  const {match, location} = props
+  const searchParams = new URLSearchParams(location.search);
+  console.log({props, searchParams})
   
   const keyword = match.params.keyword
+  const category = searchParams.get('category') || ''
+  console.log('CATEGORY?', category)
   const products = useSelector((state) => {
     console.log({state})
     return state.productList.products
@@ -19,14 +24,14 @@ const ComicScreen = ({match}) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(listProducts(keyword))
+    dispatch(listProducts(keyword, category))
    
-  },[dispatch, keyword])
+  },[dispatch, keyword, category])
 
 
   return (
     <>
-    <Route render={({history}) => <SearchBox history={history} />} />
+    <Route render={({history}) => <SearchBox history={history} keyword={keyword} category={category} />} />
       <h1>Comics</h1>
       <Row>
        {products.map(product => (

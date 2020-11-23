@@ -47,7 +47,7 @@ export const createStanding = () => async (dispatch, getState) => {
   }
 }
 
-export const updateStandingOrder = (standing) => async (dispatch, getState) => {
+export const updateStanding = (standing) => async (dispatch, getState) => {
   try {
     dispatch({
       type: STANDING_ORDER_UPDATE_REQUEST,

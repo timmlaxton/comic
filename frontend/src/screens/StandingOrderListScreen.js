@@ -16,8 +16,8 @@ const StandingOrderListScreen = ({history, match}) => {
   const standingOrderDelete = useSelector(state => state.standingOrderDelete)
   const { loading: loadingDelete, error: errorDelete, success: successDelete} = standingOrderDelete
 
-  const standingOrderCreate = useSelector(state => state.standingOrderCreate)
-  const { loading: loadingCreate, error: errorCreate, success: successCreate, standingOrder: createdStanding} = standingOrderCreate
+  const standingCreate = useSelector(state => state.standingCreate)
+  const { loading: loadingCreate, error: errorCreate, success: successCreate, standing: createdStanding} = standingCreate
 
   const userLogin = useSelector((state) => state.userLogin)
   const {userInfo} = userLogin
@@ -29,7 +29,7 @@ const StandingOrderListScreen = ({history, match}) => {
       history.push('/login')
     }
     if(successCreate) {
-      history.push(`/admin/standingOrder/${createdStanding._id}/edit`)
+      history.push(`/admin/standing/${createdStanding._id}/edit`)
     } else {
       dispatch(listStandingOrders())
     }

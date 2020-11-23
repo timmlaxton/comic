@@ -16,19 +16,19 @@ const getStandingOrders = asyncHandler (async (req, res) => {
 // Create standing order
 // POST /api/standingorders
 // Private 
-const createStandingOrder = asyncHandler (async (req, res) => {
+const createStanding = asyncHandler (async (req, res) => {
   const standing = new Standing({
     name: 'Sample Name',
     user: req.user._id,
     address: 'Sample Title',
-    contactNumber: 'Sample writer',
+    contactNumber: 'Sample Nnumber',
     email: 'Sample artist',
     title: 'Sample publisher',
     publisher: 'Sample Publisher'
   })
 
-  const createdStandingOrder = await standing.save()
-  res.status(201).json(createdStandingOrder)
+  const createdStanding = await standing.save()
+  res.status(201).json(createdStanding)
 })
 
 // Fetch single standing
@@ -49,7 +49,7 @@ const getStandingOrderById = asyncHandler (async (req, res) => {
 // Update standing
 // PUT /api/standings/:id
 // Private Admin
-const updateStandingOrder = asyncHandler (async (req, res) => {
+const updateStanding = asyncHandler (async (req, res) => {
   const {name, address, contactNumber, email, title, publisher } = req.body
 
   const standing = await Standing.findById(req.params.id)
@@ -64,8 +64,8 @@ const updateStandingOrder = asyncHandler (async (req, res) => {
     
 
 
-    const updatedStandingOrder = await standing.save()
-    res.json(updatedStandingOrder)
+    const updatedStanding = await standing.save()
+    res.json(updatedStanding)
   } else {
     res.status(404)
     throw new Error('Standing Order not found')
@@ -88,4 +88,4 @@ if(standing) {
 })
 
 
-export {createStandingOrder, getStandingOrderById, updateStandingOrder, deleteStandingOrder, getStandingOrders }
+export {createStanding, getStandingOrderById, updateStanding, deleteStandingOrder, getStandingOrders }

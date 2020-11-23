@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useMemo} from 'react'
 import axios from 'axios'
 import {PayPalButton} from 'react-paypal-button-v2'
 import {Link} from 'react-router-dom'
@@ -9,6 +9,10 @@ import Loader from '../components/Loader'
 import {getOrderDetails, payOrder, deliverOrder} from '../actions/orderActions'
 import {ORDER_PAY_RESET, ORDER_DELIVER_RESET} from '../constants/orderConstants'
 
+
+const addDecimals = (num) => {
+  return (Math.round(num * 100) / 100).toFixed(2)
+}
 
 const OrderScreen = ({match, history}) => {
   const orderId = match.params.id
@@ -29,15 +33,16 @@ const OrderScreen = ({match, history}) => {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
-  if(!loading) {
-    const addDecimals = (num) => {
-      return (Math.round(num * 100) / 100).toFixed(2)
-    }
+  const itemsPrice = React.useMemo(() => {
+    return Array.isArray(order?.orderItems) ? order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0) : 0
+  }, [order?.orderItems])
   
+  /*if (!loading) {
+    //   Calculate prices
     order.itemsPrice = addDecimals(
       order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
     )
-  }
+  }*/
 
   
   useEffect(() => {
@@ -150,7 +155,7 @@ const OrderScreen = ({match, history}) => {
                 <ListGroup.Item>
                   <Row>
                     <Col>Items</Col>
-                    <Col>£{order.itemsPrice}</Col>
+                    <Col>£{itemsPrice}</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
@@ -188,7 +193,7 @@ const OrderScreen = ({match, history}) => {
         </Row>
     </>
       
-    
   }
+
   
   export default OrderScreen

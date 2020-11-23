@@ -23,7 +23,7 @@ const PlaceOrderScreen = ({history}) => {
   cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice)).toFixed(2)
 
   const orderCreate = useSelector(state => state.orderCreate)
-  const { order, success, error} = orderCreate
+  const { order, success, error, message: errorMessage} = orderCreate
 
   useEffect(() => {
     if(success) {
@@ -125,7 +125,7 @@ const PlaceOrderScreen = ({history}) => {
               </Row>
               </ListGroup.Item>
               <ListGroup.Item>
-                  {error && <Message variant='danger'>{error}</Message>}
+                  {error && <Message variant='danger'>{errorMessage}</Message>}
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button type='button' className='btn-block' 

@@ -46,6 +46,11 @@ const addToCartHandler = () => {
           Price: £{product.price}
         </ListGroup.Item>
         <ListGroup.Item>
+          {product.writer}
+        </ListGroup.Item> <ListGroup.Item>
+          {product.artist}
+        </ListGroup.Item>
+        <ListGroup.Item>
           {product.description}
         </ListGroup.Item>
     </ListGroup>

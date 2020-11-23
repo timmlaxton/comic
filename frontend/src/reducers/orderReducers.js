@@ -25,6 +25,7 @@ import {
 } from '../constants/orderConstants'
 
 export const orderCreateReducer = (state = {}, action) => {
+  console.log('in order reducer', action)
   switch(action.type) {
     case ORDER_CREATE_REQUEST:
       return {
@@ -39,7 +40,8 @@ export const orderCreateReducer = (state = {}, action) => {
         case ORDER_CREATE_FAIL:
           return {
             loading: false,
-            error: action.payload
+            error: true,
+            message: action.payload
           }
       default: 
       return state

@@ -4,8 +4,14 @@ import {
   CART_REMOVE_ITEM,
   CART_SAVE_SHIPPING_ADDRESS,
   CART_SAVE_PAYMENT_METHOD,
-  
+  CART_RESET
 } from '../constants/cartConstants'
+
+export const resetCart = () => {
+  return {
+    type: CART_RESET
+  }
+}
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
   const { data } = await axios.get(`/api/products/${id}`)

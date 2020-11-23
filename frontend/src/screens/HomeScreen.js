@@ -15,33 +15,39 @@ const HomeScreen = ({match}) => {
 
   const productList = useSelector(state => state.productList)
   const {loading, error, products} = productList
-  const [featuredProducts, setFeaturedProducts] = useState([])
+  const [productsByCategory, setProductsByCategory] = useState({})
+  
+  
   useEffect(() => {
     dispatch(listProducts())
   },[dispatch])
 
   useEffect(() => {
-    let featuredProducts = getFeaturedProducts(products)
-    setFeaturedProducts(featuredProducts)
+    let productsByCategory = getProductsByCategory(products)
+    setProductsByCategory(productsByCategory)
   }, [products])
 
-  console.log({products, featuredProducts})
+  function getProductsByCategory(products = []) {
+    return products.reduce((acc, product) => {
+      const {category} = product
+      if (!Object.prototype.hasOwnProperty.call(acc, category)) {
+        acc[category] = []
+      }
 
-  function getFeaturedProducts(products = []) {
-    return products.filter(product => product.featured)
+      acc[category].push(product)
+      return acc
+    }, {})
   }
+
 
   return (
     <>
     <div className="container"> 
-    {/* <div className="jumbotron jumbotron-fluid">
-  <div className="container">
-    
-  </div>
-</div> */}
+   
     {!keyword && <HeroCarousel>
       
     <img
+      alt=""
       src="images/fan1.jpg"
       width="85%"
       height="100%"
@@ -55,57 +61,65 @@ const HomeScreen = ({match}) => {
     <h4>We are a specialist back issue comic shop based in Glasgow.  We also stock new monthly comics, graphic novels, t-shirts and toys.
         Thousands of titles in stock we buy sell and exchange Marvel, DC and indie comics.
         Glasgow's best Silver/Bronze Age comic dealer - a large selection always in stock!</h4>
-        <hr class="solid"/>
+        <hr className="solid"/>
         
       <h1>Back Issues</h1>
       <hr className="solid"/>
   {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> :
        <Row>
-       {featuredProducts.map(product => (
-         <Col key={product._id} sm={4} md={4} lg={4} xl={3}>
+       {productsByCategory?.['Back Issue']?.map(product => (
+         <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
            <Product product={product} />
          </Col>
        ))}
       </Row>
         }
          
-        <div className="card"   >
-      <div className="card-body">
-        <Card.Img src='' />
-        <h4 className="card-title">Standing Orders</h4>
-        <p className="card-text">Never miss out on the latest issues.</p>
-        <a href="#" className="btn btn-primary">Standing Order</a>
-      </div>
-    </div>
+         <Card className="card-advert">
+  <Card.Img src="images/x.jpg" alt="Card image" />
+  <Card.ImgOverlay>
+    <Card.Title>Card title</Card.Title>
+    <Card.Text>
+      This is a wider card with supporting text below as a natural lead-in to
+      additional content. This content is a little bit longer.
+    </Card.Text>
+    <Card.Text>Last updated 3 mins ago</Card.Text>
+  </Card.ImgOverlay>
+</Card>
+
+
     <hr className="solid"/>
         <h1>New Comics</h1>
         <hr className="solid"/>
         {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> :
        <Row>
-       {products.map(product => (
-         <Col key={product._id} sm={4} md={4} lg={4} xl={3}>
+         {productsByCategory?.['New issue']?.map(product => (
+         <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
            <Product product={product} />
          </Col>
        ))}
       </Row>
         }
         
-        <div className="card"   >
-      <div className="card-body">
-        <Card.Img src='' />
-        <h4 className="card-title">Standing Orders</h4>
-        <p className="card-text">Never miss out on the latest issues.</p>
-        <a href="#" className="btn btn-primary">Standing Order</a>
-      </div>
-    </div>
-  <hr class="solid"/>
+        <Card className="card-advert">
+  <Card.Img src="images/x.jpg" alt="Card image" />
+  <Card.ImgOverlay>
+    <Card.Title>Card title</Card.Title>
+    <Card.Text>
+      This is a wider card with supporting text below as a natural lead-in to
+      additional content. This content is a little bit longer.
+    </Card.Text>
+    <Card.Text>Last updated 3 mins ago</Card.Text>
+  </Card.ImgOverlay>
+</Card>
+  <hr className="solid"/>
  
          <h1>Trades</h1>
          <hr className="solid"/>
   {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> :
        <Row>
-       {products.map(product => (
-         <Col key={product._id} sm={4} md={4} lg={4} xl={3}>
+         {productsByCategory?.['Trades']?.map(product => (
+         <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
            <Product product={product} />
          </Col>
        ))}

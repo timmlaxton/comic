@@ -6,61 +6,69 @@ import {useDispatch, useSelector} from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import {listProductDetails, updateProduct  } from '../actions/productActions'
-import { PRODUCT_UPDATE_RESET } from '../constants/productContants';
+import {listProductDetails, updateProduct, createProduct  } from '../actions/productActions'
+import { PRODUCT_UPDATE_RESET, PRODUCT_CREATE_RESET } from '../constants/productContants';
 
 const ProductEditScreen = ({match, history }) => {
   const productId = match.params.id
 
-  const [name, setName] = useState('')
+  const [name, setName] = useState('dsadsa')
   const [price, setPrice] = useState(0)
+  const [imageUrl, setImageUrl] = useState('dsadsa')
   const [image, setImage] = useState('')
-  const [category, setCategory] = useState('')
-  const [writer, setWriter] = useState('')
-  const [artist, setArtist] = useState('')
-  const [publisher, setPublisher] = useState('')
+  const [category, setCategory] = useState('Back Issue')
+  const [writer, setWriter] = useState('writer')
+  const [artist, setArtist] = useState('artist')
+  const [publisher, setPublisher] = useState('publisher')
   const [countInStock, setCountInStock] = useState(0)
-  const [description, setDescription] = useState('')
+  const [description, setDescription] = useState('description')
   const [uploading, setUploading] = useState(false)
-  const [featured, setFeatured] = useState()
-
-  
-
-  const dispatch = useDispatch()
-
-  
+  const [featured, setFeatured] = useState(false) 
+  const dispatch = useDispatch()  
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product} = productDetails
+  const isCreateProductMode = match.path.includes('/admin/product/create')
 
-  const productUpdate = useSelector((state) => state.productUpdate)
+  const productUpdate = useSelector((state) => isCreateProductMode ? state.productCreate : state.productUpdate)
   const { loading: loadingUpdate, error: errorUpdate, success: successUpdate} = productUpdate
 
   useEffect(() => {
       if(successUpdate) {
-        dispatch({type: PRODUCT_UPDATE_RESET})
-          history.push('/admin/productlist')
+        dispatch({type: isCreateProductMode ? PRODUCT_CREATE_RESET : PRODUCT_UPDATE_RESET})
+        history.push('/admin/productlist')
+        return
+      }
+
+      console.log({match})
+
+      if (isCreateProductMode) return
+
+      if (!product.name || product._id !== productId) {
+        dispatch(listProductDetails(productId))
       } else {
-        if (!product.name || product._id !== productId) {
-          dispatch(listProductDetails(productId))
-        } else {
-          setName(product.name)
-          setPrice(product.price)
-          setImage(product.image)
-          setCategory(product.category)
-          setWriter(product.writer)
-          setArtist(product.artist)
-          setPublisher(product.publisher)
-          setCountInStock(product.countInStock)
-          setDescription(product.description)
-          setFeatured(product.featured)
-        }
+        setName(product.name)
+        setPrice(product.price)
+        setImage(product.image)
+        setCategory(product.category)
+        setWriter(product.writer)
+        setArtist(product.artist)
+        setPublisher(product.publisher)
+        setCountInStock(product.countInStock)
+        setDescription(product.description)
+        setFeatured(product.featured)
       }
       
    
   },[dispatch, productId, product , history, successUpdate])
 
-  const uploadFileHandler = async (e) => {
+  const onUploadImage = e => {
     const file = e.target.files[0]
+    setImage(file)
+  }
+
+  const uploadFileHandler = async () => {
+    if (!image) return ''
+    const file = image
     const formData = new FormData()
     formData.append('image', file)
     setUploading(true)
@@ -74,29 +82,42 @@ const ProductEditScreen = ({match, history }) => {
 
       const {data} = await axios.post('/api/upload', formData, config)
 
-      setImage(data)
-      setUploading(false)
+      // setImage(data)
+      return data
+      // setUploading(false)
     } catch (error) {
       console.error(error)
       setUploading(false)
+      throw new Error('There was a problem')
     }
   }
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
       e.preventDefault()
-      dispatch
-      (updateProduct({
+      console.log('On submit handler')
+      let finalImage = imageUrl
+      if (!finalImage && image) {
+        finalImage = await uploadFileHandler()
+      }
+
+      console.log('Got image', finalImage)
+      const payload = {
         _id: productId,
         name,
         price,
-        image,
+        image: finalImage,
         category,
         writer,
         artist,
         publisher,
         countInStock,
-        description
-      }))
+        description,
+        featured
+      }
+
+      console.log('payload', payload)
+      console.log('method', isCreateProductMode ? 'create' : 'update')
+      dispatch(isCreateProductMode ? createProduct(payload) : updateProduct(payload))
     }
 
    
@@ -107,7 +128,7 @@ const ProductEditScreen = ({match, history }) => {
       </Link>
 
     <FormContainer>
-      <h1>Edit Product</h1>
+  <h1>{isCreateProductMode ? 'Create Product' : 'Edit Product'}</h1>
       {loadingUpdate && <Loader/>}
       {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
       {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> : (
@@ -137,26 +158,28 @@ const ProductEditScreen = ({match, history }) => {
             <Form.Control 
             type='text' 
             placeholder="Enter image url" 
-            value={image} 
-            onChange={(e) => setImage(e.target.value)}
+            value={imageUrl} 
+            onChange={(e) => setImageUrl(e.target.value)}
             ></Form.Control>
             <Form.File 
             id='image-file' 
             label='Choose File' 
             custom 
-            onChange={uploadFileHandler}></Form.File>
+            onChange={onUploadImage}></Form.File>
             {uploading && <Loader />}
           </Form.Group>
 
-          <Form.Group controlId='category'>
-            <Form.Label>Category</Form.Label>
-            <Form.Control 
-            type='text' 
-            placeholder="Category" 
-            value={category} 
-            onChange={(e) => setCategory(e.target.value)}
-            ></Form.Control>
+          <Form.Group controlId="category">
+          <Form.Label>Category</Form.Label>
+          <Form.Control as="select">
+          <option>Back Issues</option>
+          <option>New Comics</option>
+          <option>Trades</option>
+          onChange={(e) => setCategory(e.target.value)}
+          </Form.Control>
           </Form.Group>
+    
+          
   
           <Form.Group controlId='writer'>
             <Form.Label>Writer</Form.Label>
@@ -214,13 +237,13 @@ const ProductEditScreen = ({match, history }) => {
           onChange={(e) => setFeatured(e.target.value)}
           ></Form.Control>
           <Form.Check type="checkbox" label="Featured" />
-          </Form.Group>
+          </Form.Group> 
 
-      
+          
   
           
           <Button type='submit' variant='primary'>
-           Update
+           {isCreateProductMode ? 'Create' : 'Update'}
           </Button>
         </Form>
   

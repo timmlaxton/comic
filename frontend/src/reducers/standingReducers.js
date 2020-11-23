@@ -20,7 +20,7 @@ import {
 
 } from '../constants/standingConstants'
 
-export const standingOrderCreateReducer = (state = {}, action) => {
+export const standingCreateReducer = (state = {}, action) => {
   switch (action.type) {
     case  STANDING_ORDER_CREATE_REQUEST:
       return { loading: true }

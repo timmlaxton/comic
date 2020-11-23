@@ -25,6 +25,7 @@ ORDER_DELIVER_FAIL,
 } 
 from '../constants/orderConstants'
 import { logout } from './userActions'
+import {resetCart} from './cartActions'
 
 export const createOrder = (order) => async (dispatch, getState) => {
   try {
@@ -47,10 +48,14 @@ export const createOrder = (order) => async (dispatch, getState) => {
         type: ORDER_CREATE_SUCCESS,
         payload: data,
       })
+
+      dispatch(resetCart())
   } catch (error) {
+    console.log('CHECK', error.response, error.message, error)
     dispatch({
       type: ORDER_CREATE_FAIL,
-      payload: error.response && error.response.data.message ? error.response.data.message : error.message
+      payload: error?.response?.data?.message || error.message
+      // error.response && error.response.data.message ? error.response.data.message : error.message
     })
   }
 }

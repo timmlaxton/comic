@@ -5,12 +5,24 @@ import Product from '../models/productModel.js'
 // GET /api/products
 // Public
 const getProducts = asyncHandler (async (req, res) => {
-  let config = req.query.keyword ? {
-    name: {
+
+  let config = {}
+  
+  if (req.query.keyword) {
+    config.name = {
       $regex: req.query.keyword,
       $options: 'i'
     }
-  } : {}
+  }
+
+  if (req.query.category) {
+    config.category = {
+      $regex: req.query.category,
+      $options: 'i'
+    }
+  }
+
+  console.log('config', config)
 
   const products = await Product.find({...config})
    
@@ -63,17 +75,18 @@ if(product) {
 // Create /api/products
 // Private Admin
 const createProduct = asyncHandler (async (req, res) => {
+  const {name, image, category, writer, artist, publisher, price, countInStock, description } = req.body
   const product = new Product({
-    name: 'Sample Name',
-    price: 0,
+    name,
+    price,
     user: req.user._id,
-    image: '/images/sample.jpg',
-    category: 'Sample category',
-    writer: 'Sample writer',
-    artist: 'Sample artist',
-    publisher: 'Sample publisher',
-    countInStock: 0,
-    description: 'Sample description'
+    image,
+    category,
+    writer,
+    artist,
+    publisher,
+    countInStock,
+    description
   })
 
   const createdProduct = await product.save()

@@ -43,7 +43,8 @@ const ProductListScreen = ({history, match}) => {
   }
 
   const createProductHandler = () => {
-    dispatch(createProduct())
+    // dispatch(createProduct())
+    history.push(`/admin/product/create`)
   }
 
   return (

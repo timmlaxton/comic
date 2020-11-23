@@ -5,14 +5,14 @@ import {useDispatch, useSelector} from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import {listStandingOrderDetails, updateStandingOrder  } from '../actions/standingActions'
+import {listStandingOrderDetails, updateStanding } from '../actions/standingActions'
 import { STANDING_ORDER_UPDATE_RESET } from '../constants/standingConstants';
 
 const StandingOrderEditScreen = ({match, history }) => {
   const standingId = match.params.id
 
   const [name, setName] = useState('')
-  const [address, setAddress] = useState("")
+  const [address, setAddress] = useState('')
   const [contactNumber, setContactNumber] = useState('')
   const [email, setEmail] = useState('')
   const [writer, setWriter] = useState('')
@@ -53,7 +53,7 @@ const StandingOrderEditScreen = ({match, history }) => {
     const submitHandler = (e) => {
       e.preventDefault()
       dispatch
-      (updateStandingOrder({
+      (updateStanding({
         _id: standingId,
         name,
         contactNumber,
@@ -90,7 +90,7 @@ const StandingOrderEditScreen = ({match, history }) => {
           <Form.Group controlId='Address'>
             <Form.Label>Address</Form.Label>
             <Form.Control 
-            type='address' 
+            type='text' 
             placeholder="Enter Address" 
             value={address} 
             onChange={(e) => setAddress(e.target.value)}
@@ -100,7 +100,7 @@ const StandingOrderEditScreen = ({match, history }) => {
           <Form.Group controlId='contactNumber'>
             <Form.Label>Image</Form.Label>
             <Form.Control 
-            type='contactNumber' 
+            type='text' 
             placeholder="Enter contactNumber" 
             value={contactNumber} 
             onChange={(e) => setContactNumber(e.target.value)}
@@ -139,12 +139,6 @@ const StandingOrderEditScreen = ({match, history }) => {
             ></Form.Control>
           </Form.Group>
   
-          
-
-        
-      
-  
-          
           <Button type='submit' variant='primary'>
            Update
           </Button>

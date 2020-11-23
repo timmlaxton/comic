@@ -26,58 +26,13 @@ header .logo {
   
 }
 
-.t{
-  font-size: 0rem;
-}
-
-/* carousel */
-.carousel-item-next,
-.carousel-item-prev,
-.carousel-item.active {
-  display: flex;
-  border: solid 6px;
-}
-
-
-.carousel img {
-  justify-content: center;
-  height: min-vh-100;
-  width: min-vh-100;
-  padding: 1px;
-  
-  
-  
-}
-.carousel a {
-  margin: 0 auto;
-}
-
-.jumbotron {
-  background-image:url('/images/fan1.jpg');
-  height:300px;
-  width: 800px;
-  background-repeat: no-repeat;
-  background-size: auto 100%;
-  border-bottom:1px solid white
-}
-.jumbotron .container {
-  position:relative;
-  top:50px;
-}
-
-
-
-
 
 .product-image {
-  width: 10%;
+  width: 100%;
+  height: 100%;
   display: block;
   height: auto;
 }
-
-
-
-
 
   .zoom {
     position: absolute;
@@ -90,10 +45,29 @@ header .logo {
  
   hr.solid {
     border-top: 3px solid #bbb;
-  
   }
 
+
+.card {
+  min-height: 200px;
+  border: none;
+}
+
 .card-body{
-  width: 50%;
+  width: 100%;
+}
+
+.card-title {
+  position: left;
+}
+
+.card-advert{
+  border: solid;
+  font: black;
   
+}
+
+.card-img {
+  width: auto;
+  height: auto;
 }

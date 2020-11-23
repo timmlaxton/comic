@@ -22,11 +22,11 @@ import {
 
 } from '../constants/productContants'
 
-export const listProducts = (keyword = '', featured = false) => async (dispatch) => {
+export const listProducts = (keyword = '', category = '', featured = false) => async (dispatch) => {
    try {
      dispatch({type: PRODUCT_LIST_REQUEST})
 
-     const {data} = await axios.get(`/api/products?keyword=${keyword}&featured=${featured}`)
+     const {data} = await axios.get(`/api/products?keyword=${keyword}&featured=${featured}&category=${category}`)
 
      dispatch({
        type: PRODUCT_LIST_SUCCESS,
@@ -104,7 +104,7 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
   }
 }
 
-export const createProduct = () => async (dispatch, getState) => {
+export const createProduct = (payload) => async (dispatch, getState) => {
   try {
     dispatch({
       type: PRODUCT_CREATE_REQUEST,
@@ -117,7 +117,7 @@ export const createProduct = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`
       },
     }
-     const {data} = await axios.post(`/api/products`, {}, config)
+     const {data} = await axios.post(`/api/products`, payload, config)
 
     dispatch({
       type: PRODUCT_CREATE_SUCCESS,
