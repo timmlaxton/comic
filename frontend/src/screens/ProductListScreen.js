@@ -4,7 +4,7 @@ import {Table, Button, Row, Col} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import {listProducts, deleteProduct, createProduct} from '../actions/productActions'
+import {listProducts, deleteProduct, productCreate} from '../actions/productActions'
 import {PRODUCT_CREATE_RESET} from '../constants/productContants'
 
 const ProductListScreen = ({history, match}) => {
@@ -73,8 +73,8 @@ const ProductListScreen = ({history, match}) => {
               <th>NAME</th>
               <th>PRICE</th>
               <th>CATEGORY</th>
-              <th>BRAND</th>
-              <th></th>
+              <th>COUNT IN STOCK</th>
+              <></>
             </tr>
           </thead>
           <tbody>
@@ -84,7 +84,7 @@ const ProductListScreen = ({history, match}) => {
                 <td>{product.name}</td>
                 <td> £{product.price}</td>
                 <td>{product.category}</td>
-                <td>{product.brand}</td>
+                <td>{product.countInStock}</td>
                 <td>
                   <LinkContainer to={`/admin/product/${product._id}/edit`}>
                     <Button variant='light' className='btn-sm'>

@@ -8,15 +8,15 @@ const categoryOptions = [
   },
   {
     label: 'Back Issues',
-    value: 'back issue'
+    value: 'back Issue'
   },
   {
     label: 'Trades',
-    value: 'trades'
+    value: 'trade'
   },
   {
-    label: 'New Issues',
-    value: 'new issues'
+    label: 'New Comics',
+    value: 'new comic'
   }
 ]
 const SearchBox = ({history, keyword: keywordInitialValue, category: categoryIntialValue}) => {

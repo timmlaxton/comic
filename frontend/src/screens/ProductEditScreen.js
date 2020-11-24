@@ -16,14 +16,13 @@ const ProductEditScreen = ({match, history }) => {
   const [price, setPrice] = useState(0)
   const [imageUrl, setImageUrl] = useState('')
   const [image, setImage] = useState('')
-  const [category, setCategory] = useState('Back Issue')
+  const [category, setCategory] = useState(false)
   const [writer, setWriter] = useState('writer')
   const [artist, setArtist] = useState('artist')
   const [publisher, setPublisher] = useState('publisher')
   const [countInStock, setCountInStock] = useState(0)
   const [description, setDescription] = useState('description')
   const [uploading, setUploading] = useState(false)
-  const [featured, setFeatured] = useState(false) 
   const [imagePreview, setImagePreview] = useState(null)
   const dispatch = useDispatch()  
   const productDetails = useSelector((state) => state.productDetails)
@@ -56,11 +55,11 @@ const ProductEditScreen = ({match, history }) => {
         setPublisher(product.publisher)
         setCountInStock(product.countInStock)
         setDescription(product.description)
-        setFeatured(product.featured)
+        
       }
       
    
-  },[dispatch, productId, product , history, successUpdate])
+  },[dispatch, productId, product , history, successUpdate, isCreateProductMode])
 
   const onUploadImage = e => {
     const file = e.target.files[0]
@@ -111,7 +110,7 @@ const ProductEditScreen = ({match, history }) => {
         finalImage = await uploadFileHandler()
       }
 
-      console.log('Got image', finalImage)
+      
       const payload = {
         _id: productId,
         name,
@@ -123,7 +122,7 @@ const ProductEditScreen = ({match, history }) => {
         publisher,
         countInStock,
         description,
-        featured
+        
       }
 
       
@@ -183,12 +182,11 @@ const ProductEditScreen = ({match, history }) => {
           {imagePreview ? (<Image src={imagePreview} />) : null}
 
           <Form.Group controlId="category">
-          <Form.Label>Category</Form.Label>
-          <Form.Control as="select">
-          <option>Back Issues</option>
-          <option>New Comics</option>
-          <option>Trades</option>
-          onChange={(e) => setCategory(e.target.value)}
+          <Form.Label>Select Category</Form.Label>
+          <Form.Control as="select" onChange={(e) => setCategory(e.target.value)}>
+            <option value="Back Issue">Back Issues</option>
+            <option value="New Comics">New Comics</option>
+            <option value="Trades">Trades</option>          
           </Form.Control>
           </Form.Group>
     
@@ -244,13 +242,7 @@ const ProductEditScreen = ({match, history }) => {
             ></Form.Control>
           </Form.Group>
 
-          <Form.Group id="formGridCheckbox">
-          <Form.Control
-          value={featured} 
-          onChange={(e) => setFeatured(e.target.value)}
-          ></Form.Control>
-          <Form.Check type="checkbox" label="Featured" />
-          </Form.Group> 
+          
 
           
   
