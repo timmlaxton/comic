@@ -75,8 +75,8 @@ const HomeScreen = ({match}) => {
       </Row>
         }
          
-         <Card className="card-advert">
-  <Card.Img src="images/x.jpg" alt="Card image" />
+  <Card className="card-advert">
+  <Card.Img src="./images/books.jpg" alt="Card image" />
   <Card.ImgOverlay>
     <Card.Title>Card title</Card.Title>
     <Card.Text>
@@ -102,7 +102,7 @@ const HomeScreen = ({match}) => {
         }
         
         <Card className="card-advert">
-  <Card.Img src="images/x.jpg" alt="Card image" />
+  <Card.Img src="./images/toyz.jpg" alt="Card image" />
   <Card.ImgOverlay>
     <Card.Title>Card title</Card.Title>
     <Card.Text>

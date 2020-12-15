@@ -58,15 +58,22 @@ header .logo {
 
 .card-title {
   position: left;
+  
 }
 
 .card-advert{
-  border: solid;
+  border: none;
   font: black;
+  font-size: 30px;
+ 
+ 
   
 }
 
 .card-img {
   width: auto;
-  height: auto;
+   height: 10%;
 }
+
+
+  
