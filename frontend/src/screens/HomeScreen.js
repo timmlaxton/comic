@@ -94,7 +94,7 @@ const HomeScreen = ({match}) => {
         {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> :
        <Row>
          {productsByCategory?.['New Comics']?.map(product => (
-         <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+         <Col key={product._id} sm={2} md={2} lg={2} xl={2}>
            <Product product={product} />
          </Col>
        ))}

@@ -16,9 +16,13 @@ const Product = ({product}) => {
         <Card.Title as='div'>
           <strong>{product.name}</strong>
           </Card.Title>
+
+        <Card.Title as='div'>
+          <strong>Issue: #{product.issue}</strong>
+          </Card.Title>
           
       </Link>
-      <Card.Text as='h3'>£{product.price}</Card.Text>
+      <Card.Text > <strong>£{product.price}</strong></Card.Text>
       </Card.Body>
     </Card>
   )

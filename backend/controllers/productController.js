@@ -75,9 +75,10 @@ if(product) {
 // Create /api/products
 // Private Admin
 const createProduct = asyncHandler (async (req, res) => {
-  const {name, image, category, writer, artist, publisher, price, countInStock, description } = req.body
+  const {name, issue, image, category, writer, artist, publisher, price, countInStock, description } = req.body
   const product = new Product({
     name,
+    issue,
     price,
     user: req.user._id,
     image,
@@ -97,12 +98,13 @@ const createProduct = asyncHandler (async (req, res) => {
 // PUT /api/products/:id
 // Private Admin
 const updateProduct = asyncHandler (async (req, res) => {
-  const {name, image, category, writer, artist, publisher, price, countInStock, description } = req.body
+  const {name, issue, image, category, writer, artist, publisher, price, countInStock, description } = req.body
 
   const product = await Product.findById(req.params.id)
 
   if(product) {
     product.name = name
+    product.issue = issue
     product.image = image
     product.category = category
     product.writer = writer

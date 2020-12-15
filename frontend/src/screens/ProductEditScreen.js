@@ -14,6 +14,7 @@ const ProductEditScreen = ({match, history }) => {
 
   const [name, setName] = useState('name')
   const [price, setPrice] = useState(0)
+  const [issue, setIssue] = useState(0)
   const [imageUrl, setImageUrl] = useState('')
   const [image, setImage] = useState('')
   const [category, setCategory] = useState(false)
@@ -47,6 +48,7 @@ const ProductEditScreen = ({match, history }) => {
         dispatch(listProductDetails(productId))
       } else {
         setName(product.name)
+        setIssue(product.issue)
         setPrice(product.price)
         setImagePreview(product.image)
         setCategory(product.category)
@@ -114,6 +116,7 @@ const ProductEditScreen = ({match, history }) => {
       const payload = {
         _id: productId,
         name,
+        issue,
         price,
         image: finalImage,
         category,
@@ -149,6 +152,16 @@ const ProductEditScreen = ({match, history }) => {
             placeholder="Enter name" 
             value={name} 
             onChange={(e) => setName(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
+
+          <Form.Group controlId='issue'>
+            <Form.Label>Issue</Form.Label>
+            <Form.Control 
+            type='number' 
+            placeholder="Enter issue number" 
+            value={issue} 
+            onChange={(e) => setIssue(e.target.value)}
             ></Form.Control>
           </Form.Group>
   
@@ -201,6 +214,7 @@ const ProductEditScreen = ({match, history }) => {
             onChange={(e) => setWriter(e.target.value)}
             ></Form.Control>
           </Form.Group>
+ 
 
           <Form.Group controlId='artist'>
             <Form.Label>Artist</Form.Label>
@@ -235,10 +249,11 @@ const ProductEditScreen = ({match, history }) => {
           <Form.Group controlId='description'>
             <Form.Label>Description</Form.Label>
             <Form.Control 
-            type='text' 
+            as='textarea' 
             placeholder="Enter description" 
             value={description} 
             onChange={(e) => setDescription(e.target.value)}
+            rows={3}
             ></Form.Control>
           </Form.Group>
 
