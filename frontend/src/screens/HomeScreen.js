@@ -34,7 +34,7 @@ const HomeScreen = ({match}) => {
         acc[category] = []
       }
 
-      acc[category].push(product)
+      product.featured && acc[category].push(product)
       return acc
     }, {})
   }

@@ -25,13 +25,20 @@ const ProductEditScreen = ({match, history }) => {
   const [description, setDescription] = useState('description')
   const [uploading, setUploading] = useState(false)
   const [imagePreview, setImagePreview] = useState(null)
+  const [featured, setFeatured] = useState(false)
   const dispatch = useDispatch()  
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product} = productDetails
+
   const isCreateProductMode = match.path.includes('/admin/product/create')
 
   const productUpdate = useSelector((state) => isCreateProductMode ? state.productCreate : state.productUpdate)
   const { loading: loadingUpdate, error: errorUpdate, success: successUpdate} = productUpdate
+
+
+/*
+  productType: issue|volume
+*/
 
   useEffect(() => {
       if(successUpdate) {
@@ -57,7 +64,7 @@ const ProductEditScreen = ({match, history }) => {
         setPublisher(product.publisher)
         setCountInStock(product.countInStock)
         setDescription(product.description)
-        
+        setFeatured(product.featured)        
       }
       
    
@@ -118,17 +125,17 @@ const ProductEditScreen = ({match, history }) => {
         name,
         issue,
         price,
-        image: finalImage,
         category,
         writer,
         artist,
         publisher,
         countInStock,
         description,
-        
+        featured,
+        ...finalImage && {image: finalImage}
       }
 
-      
+      console.log({payload})
       dispatch(isCreateProductMode ? createProduct(payload) : updateProduct(payload))
     }
 
@@ -192,7 +199,7 @@ const ProductEditScreen = ({match, history }) => {
             {uploading && <Loader />}
           </Form.Group>
 
-          {imagePreview ? (<Image src={imagePreview} />) : null}
+          {imagePreview ? (<Image src={imagePreview} fluid />) : null}
 
           <Form.Group controlId="category">
           <Form.Label>Select Category</Form.Label>
@@ -201,6 +208,12 @@ const ProductEditScreen = ({match, history }) => {
             <option value="New Comics">New Comics</option>
             <option value="Trades">Trades</option>          
           </Form.Control>
+          </Form.Group>
+
+          <Form.Group controlId="featured">
+            <Form.Label>Featured</Form.Label>
+            <Form.Check checked={featured} type="checkbox" onChange={e => setFeatured(e.target.checked)}>
+            </Form.Check>
           </Form.Group>
     
           
