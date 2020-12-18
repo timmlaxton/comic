@@ -76,4 +76,54 @@ header .logo {
 }
 
 
+  .contact {
+    margin-left: 190px;
+    padding-left: 2em;
+    padding-right:.9em;
+  }
+
+  .hours {
+    margin-left: 50px;
+    padding-left: 2em;
+    padding-right:.9em;
+  }
+
+  .follow {
+    margin-left: 200px;
+    padding-left: 2em;
+    padding-right:.9em;
+  }
+
+  .copyright {
+    min-height: 10em;
+    display: table-cell;
+    vertical-align: center
+  }
+
+  .fa-facebook-f{
+    text-align: center;
+    position: absolute;
+    width: 100px;
+    height: 90px;
+    top: -20%;
+    left: 40%;
+    margin-left: -50px; /* margin is -0.5 * dimension */
+    margin-top: 80px; 
+    color: #818181;
+    font-size: 20px;
+  }
+  
+  .fa-twitter{
+    text-align: center;
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    top: -20%;
+    left: 60%;
+    margin-left: -50px; /* margin is -0.5 * dimension */
+    margin-top: 80px; 
+    color: #818181;
+    font-size: 20px;
+  }
+  
   

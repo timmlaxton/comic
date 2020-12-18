@@ -18,7 +18,7 @@ const Product = ({product}) => {
           </Card.Title>
 
         <Card.Title as='div'>
-          <strong>Issue: #{product.issue}</strong>
+          <strong>{product.style}: {product.issue}</strong>
           </Card.Title>
           
       </Link>

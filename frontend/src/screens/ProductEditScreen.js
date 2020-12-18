@@ -14,6 +14,7 @@ const ProductEditScreen = ({match, history }) => {
 
   const [name, setName] = useState('name')
   const [price, setPrice] = useState(0)
+  const [style, setStyle] = useState(false)
   const [issue, setIssue] = useState(0)
   const [imageUrl, setImageUrl] = useState('')
   const [image, setImage] = useState('')
@@ -56,6 +57,7 @@ const ProductEditScreen = ({match, history }) => {
       } else {
         setName(product.name)
         setIssue(product.issue)
+        setStyle(product.style)
         setPrice(product.price)
         setImagePreview(product.image)
         setCategory(product.category)
@@ -126,6 +128,7 @@ const ProductEditScreen = ({match, history }) => {
         issue,
         price,
         category,
+        style,
         writer,
         artist,
         publisher,
@@ -160,6 +163,14 @@ const ProductEditScreen = ({match, history }) => {
             value={name} 
             onChange={(e) => setName(e.target.value)}
             ></Form.Control>
+          </Form.Group>
+
+          <Form.Group controlId="style">
+          <Form.Label>Select Style</Form.Label>
+          <Form.Control as="select" onChange={(e) => setStyle(e.target.value)}>
+            <option value="Issue">Issue</option>
+            <option value="Volume">Volume</option>          
+          </Form.Control>
           </Form.Group>
 
           <Form.Group controlId='issue'>
