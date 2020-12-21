@@ -1,10 +1,13 @@
 import React, { useState, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {Row, Col, Card} from 'react-bootstrap'
+import {Row, Col, Card, Container} from 'react-bootstrap'
 import Product from '../components/Product'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import HeroCarousel from 'react-hero-carousel'
+import Carousel from 'react-bootstrap/Carousel'
+import Footer from '../components/Footer'
+
 import {listProducts} from '../actions/productActions' 
 
 
@@ -101,18 +104,6 @@ const HomeScreen = ({match}) => {
       </Row>
         }
         
-        <Card className="card-advert">
-  <Card.Img src="./images/toyz.jpg" alt="Card image" />
-  <Card.ImgOverlay>
-    <Card.Title>Card title</Card.Title>
-    <Card.Text>
-      This is a wider card with supporting text below as a natural lead-in to
-      additional content. This content is a little bit longer.
-    </Card.Text>
-    <Card.Text>Last updated 3 mins ago</Card.Text>
-  </Card.ImgOverlay>
-</Card>
-  <hr className="solid"/>
  
          <h1>Trades</h1>
          <hr className="solid"/>
@@ -126,6 +117,57 @@ const HomeScreen = ({match}) => {
       </Row>
         }
         <hr className="solid"/>
+        <footer classname="bg-light text-center text-lg-start">
+      <Container className="p-4"> 
+        <Row>
+          <Col lg={2} md={2} className='hours'>
+            <h5 className="text-uppercase">Opening Hours</h5>
+
+            <p>
+            11am to 4pm - Wednesday to Saturday
+            </p>
+            <p>
+            12pm to 4pm - Sunday
+            </p>
+           <p> 
+            Closed Monday to Tuesday
+            </p>
+
+           
+          </Col>
+          <Col lg={2} md={2} className='contact'>
+            <h5 className="text-uppercase">Contact Us</h5>
+            <p>
+            citycentrecomics@hotmail.com
+            </p>
+            <p>
+            0141 357 6325
+            </p>
+            <p>
+            37 Ruthven Lane, G12 9BG
+            Glasgow
+              </p>
+            </Col>
+
+            <Col lg={2} md={22} className='follow'>
+            <h5 className="text-uppercase">Follow Us</h5>
+            <div>   
+       <a href={"https://www.facebook.com/citycentrecomics"}>
+       <i className="fab fa-facebook-f" ></i>
+       </a>
+      </div> 
+     <div>   
+       <a href={"https://twitter.com/citycentrecomic"}> 
+      <i className="fab fa-twitter"></i>
+      </a>
+      </div> 
+      
+            </Col>
+            
+        </Row>
+        <div className="copyright">Copyright &copy; City Centre Comics </div>
+      </Container>
+    </footer>
     </>
   )
 }

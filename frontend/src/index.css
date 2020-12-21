@@ -95,9 +95,11 @@ header .logo {
   }
 
   .copyright {
-    min-height: 10em;
-    display: table-cell;
-    vertical-align: center
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  text-align: center;
+  
   }
 
   .fa-facebook-f{
@@ -127,3 +129,20 @@ header .logo {
   }
   
   
+
+  .slides {
+
+
+    display: flex;
+    
+    
+    }
+    
+    
+    .slides > div {
+    
+    
+    display: flex;
+    
+    
+    }
