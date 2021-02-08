@@ -51,11 +51,10 @@ export const createOrder = (order) => async (dispatch, getState) => {
 
       dispatch(resetCart())
   } catch (error) {
-    console.log('CHECK', error.response, error.message, error)
     dispatch({
       type: ORDER_CREATE_FAIL,
       payload: error?.response?.data?.message || error.message
-      // error.response && error.response.data.message ? error.response.data.message : error.message
+      // error.response && error.response.data.mess age ? error.response.data.message : error.message
     })
   }
 }

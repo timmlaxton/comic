@@ -15,10 +15,8 @@ const ComicScreen = (props) => {
   
   const keyword = match.params.keyword || ''
   const category = searchParams.get('category') || ''
-  console.log('CATEGORY?', category)
   const products = useSelector((state) => {
-    console.log({state})
-    return state.productList.products
+  return state.productList.products
   })
   
   const dispatch = useDispatch()

@@ -83,8 +83,6 @@ const createOrder = asyncHandler(async (req, res) => {
   }
 })
 
-
-
 // @desc    Create new order
 // @route   POST /api/orders
 // @access  Private

@@ -10,11 +10,11 @@ import {getOrderDetails, payOrder, deliverOrder} from '../actions/orderActions'
 import {ORDER_PAY_RESET, ORDER_DELIVER_RESET} from '../constants/orderConstants'
 
 
-const addDecimals = (num) => {
+  const addDecimals = (num) => {
   return (Math.round(num * 100) / 100).toFixed(2)
-}
+  }
 
-const OrderScreen = ({match, history}) => {
+ const OrderScreen = ({match, history}) => {
   const orderId = match.params.id
 
   const [sdkReady, setSdkReady] = useState(false)
@@ -37,12 +37,7 @@ const OrderScreen = ({match, history}) => {
     return Array.isArray(order?.orderItems) ? order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0) : 0
   }, [order?.orderItems])
   
-  /*if (!loading) {
-    //   Calculate prices
-    order.itemsPrice = addDecimals(
-      order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-    )
-  }*/
+  
 
   
   useEffect(() => {
@@ -75,7 +70,6 @@ const OrderScreen = ({match, history}) => {
   }, [dispatch, orderId, successPay, successDeliver, order, history, userInfo  ])
 
     const successPaymentHandler = (paymentResult) => {
-      console.log(paymentResult)
       dispatch(payOrder(orderId, paymentResult))
     }
 
@@ -85,7 +79,7 @@ const OrderScreen = ({match, history}) => {
   
     return loading ? <Loader /> : error ? <Message variant='danger'>{error}</Message> : <>
     <h1>Order {order._id}</h1>
-    <Row>
+         <Row>
           <Col md={8}>
             <ListGroup variant='flush'>
               <ListGroup.Item>
@@ -131,7 +125,7 @@ const OrderScreen = ({match, history}) => {
                             />
                           </Col>
                           <Col>
-                            <Link to={`/product/£{item.product}`}>
+                            <Link to={`/product/${item.product}`}>
                               {item.name}
                             </Link>
                           </Col>

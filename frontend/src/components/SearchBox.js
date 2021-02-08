@@ -33,7 +33,6 @@ const SearchBox = ({history, keyword: keywordInitialValue, category: categoryInt
   }
 
   const onSelectChange = (e) => {
-    console.log('on select change', e)
     setCategory(e.target.value)
   }
 
